@@ -22,7 +22,7 @@ class Producer implements Runnable {
                 System.out.println("生产");//}
                 java.util.Random r=new java.util.Random();
                 Thread.sleep(1000);
-                int Ptime;
+                int Ptime=r.nextInt();
 
             }
         } catch (InterruptedException ex) { }
