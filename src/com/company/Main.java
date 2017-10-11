@@ -17,10 +17,12 @@ class Producer implements Runnable {
     public void run() {
         try {
             while (true) {
-                while (!(queue.size()==0))//{
+               // while (!(queue.size()==0))//{
                 queue.put(produce());
                 System.out.println("生产");//}
+                java.util.Random r=new java.util.Random();
                 Thread.sleep(1000);
+                int Ptime;
 
             }
         } catch (InterruptedException ex) { }
@@ -39,7 +41,9 @@ class Consumer implements Runnable {
                 /*while*/if(!(queue.size()==0)){
                     consume(queue.take());
                 System.out.println("消费");}
+                java.util.Random r=new java.util.Random();
                 Thread.sleep(1000);
+                int Ctime=r.nextInt();
             }
 
         } catch (InterruptedException ex) {   }
