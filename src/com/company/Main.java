@@ -18,13 +18,18 @@ class Producer implements Runnable {
     public void run() {
         try {
             while (true) {
-               while ( ){
+              if (queuesize<50){
                 queue.put(produce());
                 System.out.println("生产");
                 java.util.Random r=new java.util.Random();
                 int Ptime=r.nextInt();
                 if(Ptime<0){Ptime=-Ptime;}
                 Thread.sleep(Ptime%3000);}
+                else{
+                  ystem.out.println("队列已满，等待中");
+                  Thread.sleep(1000);
+              }
+              }
 
 
             }
