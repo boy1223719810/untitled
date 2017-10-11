@@ -21,8 +21,9 @@ class Producer implements Runnable {
                 queue.put(produce());
                 System.out.println("生产");//}
                 java.util.Random r=new java.util.Random();
-                Thread.sleep(1000);
                 int Ptime=r.nextInt();
+                Thread.sleep(Ptime);
+
 
             }
         } catch (InterruptedException ex) { }
@@ -42,8 +43,9 @@ class Consumer implements Runnable {
                     consume(queue.take());
                 System.out.println("消费");}
                 java.util.Random r=new java.util.Random();
-                Thread.sleep(1000);
                 int Ctime=r.nextInt();
+                Thread.sleep(Ctime);
+
             }
 
         } catch (InterruptedException ex) {   }
