@@ -32,7 +32,7 @@ class Producer implements Runnable {
               }
 
 
-            }
+
         } catch (InterruptedException ex) { }
     }
     Object produce() {
