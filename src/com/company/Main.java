@@ -26,7 +26,7 @@ class Producer implements Runnable {
                 if(Ptime<0){Ptime=-Ptime;}
                 Thread.sleep(Ptime%3000);}
                 else{
-                  ystem.out.println("队列已满，等待中");
+                  System.out.println("队列已满，等待中");
                   Thread.sleep(1000);
               }
               }
