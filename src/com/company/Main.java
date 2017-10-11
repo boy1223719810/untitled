@@ -13,16 +13,18 @@ public class Main {
 }
 class Producer implements Runnable {
     private final BlockingQueue queue;
+    private int queuesize = 50;
     Producer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
             while (true) {
-               // while (!(queue.size()==0))//{
+               while ( ){
                 queue.put(produce());
-                System.out.println("生产");//}
+                System.out.println("生产");
                 java.util.Random r=new java.util.Random();
                 int Ptime=r.nextInt();
-                Thread.sleep(Ptime);
+                if(Ptime<0){Ptime=-Ptime;}
+                Thread.sleep(Ptime%3000);}
 
 
             }
@@ -35,6 +37,7 @@ class Producer implements Runnable {
 
 class Consumer implements Runnable {
     private final BlockingQueue queue;
+
     Consumer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
@@ -44,7 +47,8 @@ class Consumer implements Runnable {
                 System.out.println("消费");}
                 java.util.Random r=new java.util.Random();
                 int Ctime=r.nextInt();
-                Thread.sleep(Ctime);
+                if(Ctime<0){Ctime=-Ctime;}
+                Thread.sleep(Ctime%3000);
 
             }
 
