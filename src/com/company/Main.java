@@ -3,46 +3,45 @@ package com.company;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Main {
+import static com.company.Producer.queuesize;
 
+public class Main {
     public static void main(String[] args) {
         Setup a0 = new Setup();
         a0.main();
-
     }
 }
 class Producer implements Runnable {
     private final BlockingQueue queue;
-    private int queuesize = 50;
+    public static int queuesize = 0;  //写int 是原子操作 不需要加锁;
     Producer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
             while (true) {
               if (queuesize<50){
+                  private int Pnumber;
                 queue.put(produce());
                 System.out.println("生产");
                 java.util.Random r=new java.util.Random();
                 int Ptime=r.nextInt();
                 if(Ptime<0){Ptime=-Ptime;}
-                Thread.sleep(Ptime%3000);}
+                Thread.sleep(Ptime%300);
+                queuesize+=1;
+
+              }
                 else{
                   System.out.println("队列已满，等待中");
                   Thread.sleep(1000);
               }
               }
-
-
-
         } catch (InterruptedException ex) { }
     }
     Object produce() {
         return 0;
     }
 }
-
 class Consumer implements Runnable {
     private final BlockingQueue queue;
-
     Consumer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
@@ -53,17 +52,14 @@ class Consumer implements Runnable {
                 java.util.Random r=new java.util.Random();
                 int Ctime=r.nextInt();
                 if(Ctime<0){Ctime=-Ctime;}
+                queuesize-=1;
                 Thread.sleep(Ctime%3000);
-
             }
-
         } catch (InterruptedException ex) {   }
     }
     void consume(Object x) {
-
     }
 }
-
 class Setup {
     void main() {
         BlockingQueue q = new LinkedBlockingQueue();
