@@ -13,13 +13,13 @@ public class Main {
 }
 class Producer implements Runnable {
     private final BlockingQueue queue;
-    public static int queuesize = 50;  //写int 是原子操作 不需要加锁;
+    public static int queuesize =0;  //写int 是原子操作 不需要加锁;
     private int Pnumber;
     Producer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
             while (true) {
-              if (queuesize<50){
+              if (queuesize<10){
 
                 queue.put(produce());
                 System.out.println("生产"+(Pnumber+1)+"个");
@@ -50,15 +50,14 @@ class Consumer implements Runnable {
             while (true) {
                 /*while*/if(!(queue.size()==0)){
                     consume(queue.take());
-                System.out.println("消费"+(Cnumber+1)+"个");
+                System.out.println("消费1个");
                     queuesize-=1;
                     Cnumber++;
                 }
                 java.util.Random r=new java.util.Random();
                 int Ctime=r.nextInt();
                 if(Ctime<0){Ctime=-Ctime;}
-                queuesize-=1;
-                Cnumber++;
+                System.out.println("已消费"+Cnumber+"个");
                 Thread.sleep(Ctime%3000);
             }
         } catch (InterruptedException ex) {   }
