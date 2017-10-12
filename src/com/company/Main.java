@@ -13,21 +13,22 @@ public class Main {
 }
 class Producer implements Runnable {
     private final BlockingQueue queue;
-    public static int queuesize = 0;  //写int 是原子操作 不需要加锁;
+    public static int queuesize = 50;  //写int 是原子操作 不需要加锁;
+    private int Pnumber;
     Producer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
             while (true) {
               if (queuesize<50){
-                  private int Pnumber;
+
                 queue.put(produce());
-                System.out.println("生产");
+                System.out.println("生产"+(Pnumber+1)+"个");
                 java.util.Random r=new java.util.Random();
                 int Ptime=r.nextInt();
                 if(Ptime<0){Ptime=-Ptime;}
                 Thread.sleep(Ptime%300);
                 queuesize+=1;
-
+                Pnumber++;
               }
                 else{
                   System.out.println("队列已满，等待中");
@@ -42,17 +43,22 @@ class Producer implements Runnable {
 }
 class Consumer implements Runnable {
     private final BlockingQueue queue;
+    private int Cnumber;
     Consumer(BlockingQueue q) { queue = q; }
     public void run() {
         try {
             while (true) {
                 /*while*/if(!(queue.size()==0)){
                     consume(queue.take());
-                System.out.println("消费");}
+                System.out.println("消费"+(Cnumber+1)+"个");
+                    queuesize-=1;
+                    Cnumber++;
+                }
                 java.util.Random r=new java.util.Random();
                 int Ctime=r.nextInt();
                 if(Ctime<0){Ctime=-Ctime;}
                 queuesize-=1;
+                Cnumber++;
                 Thread.sleep(Ctime%3000);
             }
         } catch (InterruptedException ex) {   }
